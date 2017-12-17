@@ -28,7 +28,7 @@ namespace SQLSpelunker.Core
             }
 
             var create = visitor.CreatedProcedures[0];
-            if(create.StatementList.Statements.Count == 0)
+            if(create.StatementList == null)
             {
                 return "";
             }

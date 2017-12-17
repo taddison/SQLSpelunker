@@ -20,6 +20,7 @@ exec dbo.ProcTwo;
             Assert.AreEqual("exec dbo.ProcTwo;", extractedText);
         }
 
+        [TestMethod]
         public void SingleExecStatementExtractedWithBeginEnd()
         {
             var procText =
@@ -35,6 +36,7 @@ end
             Assert.AreEqual("begin\r\nexec dbo.ProcTwo;\r\nend", extractedText);
         }
 
+        [TestMethod]
         public void SingleExecStatementExtractedWithBeginEndParamBlock()
         {
             var procText =
@@ -49,6 +51,20 @@ end
             var extractedText = StoredProcedureParser.ExtractBodyOfProcedure(procText);
 
             Assert.AreEqual("begin\r\nexec dbo.ProcTwo;\r\nend", extractedText);
+        }
+
+        [TestMethod]
+        public void EmptyProcReturnsEmptyString()
+        {
+            var procText =
+@"
+create procedure dbo.ProcOne
+    @someParam int
+as
+";
+            var extractedText = StoredProcedureParser.ExtractBodyOfProcedure(procText);
+
+            Assert.AreEqual("", extractedText);
         }
     }
 }
