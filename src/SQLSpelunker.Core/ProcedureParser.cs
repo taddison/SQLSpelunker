@@ -12,8 +12,7 @@ namespace SQLSpelunker.Core
         {
             var parser = new TSql140Parser(false);
             var sr = new StringReader(tsqlBatch);
-            var tokens = parser.GetTokenStream(sr, out IList<ParseError> tokenErrors);
-            var fragment = parser.Parse(tokens, out IList<ParseError> fragmentErrors);
+            var fragment = parser.Parse(sr, out IList<ParseError> fragmentErrors);
 
             var procs = from batch in (fragment as TSqlScript).Batches
                                      from statement in batch.Statements
