@@ -31,7 +31,7 @@ namespace SQLSpelunker.Core
                 throw new ArgumentOutOfRangeException(defaultSchema);
             }
 
-            var call = new ProcedureCall(null,null);
+            var call = new ProcedureCall(null,null,0);
 
             PopulateCalledProcedures(call, sqlScript, currentDatabase, defaultSchema);
 
@@ -55,7 +55,7 @@ namespace SQLSpelunker.Core
                 // If we've already seen this call we're in an infinite loop
                 if(newParentList.Contains(proc))
                 {
-                    var infinite = new ProcedureCall(newParentList, proc)
+                    var infinite = new ProcedureCall(newParentList, proc, call.Depth + 1)
                     {
                         IsInfiniteLoop = true
                     };
@@ -64,7 +64,7 @@ namespace SQLSpelunker.Core
                 }
 
                 var definition = _definitionService.GetStoredProcedureDefinition(proc);
-                var childCall = new ProcedureCall(newParentList, proc);
+                var childCall = new ProcedureCall(newParentList, proc, call.Depth + 1);
                 call.Children.Add(childCall);
                 PopulateCalledProcedures(childCall, definition, childCall.StoredProcedure.Database, defaultSchema);
             }
