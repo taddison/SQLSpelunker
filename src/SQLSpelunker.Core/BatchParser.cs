@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace SQLSpelunker.Core
 {
-    public static class ProcedureParser
+    public static class BatchParser
     {
         public static IList<ParsedStoredProcedureIdentifier> GetExecutedProcedures(string tsqlBatch)
         {
