@@ -11,6 +11,12 @@ namespace SQLSpelunker.Core
                 throw new ArgumentOutOfRangeException(nameof(name));
             }
 
+            // Default schema (e.g. DB..Proc) parses as an empty string, use null instead
+            if(string.IsNullOrWhiteSpace(schema))
+            {
+                schema = null;
+            }
+
             Database = database;
             Schema = schema;
             Name = name;
