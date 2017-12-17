@@ -8,7 +8,7 @@ namespace SQLSpelunker.Core
 {
     public static class ProcedureParser
     {
-        public static IList<StoredProcedure> GetExecutedProcedures(string tsqlBatch)
+        public static IList<ParsedStoredProcedureIdentifier> GetExecutedProcedures(string tsqlBatch)
         {
             var parser = new TSql140Parser(false);
             var sr = new StringReader(tsqlBatch);
@@ -22,12 +22,12 @@ namespace SQLSpelunker.Core
                                      let execProc = execStatement.ExecuteSpecification.ExecutableEntity as ExecutableProcedureReference
                                      select execProc;
 
-            var executedProcs = new List<StoredProcedure>();
+            var executedProcs = new List<ParsedStoredProcedureIdentifier>();
 
             foreach(var proc in procs)
             {
                 var id = proc.ProcedureReference.ProcedureReference.Name;
-                var procedure = new StoredProcedure(id.DatabaseIdentifier?.Value, id.SchemaIdentifier?.Value, id.BaseIdentifier.Value);
+                var procedure = new ParsedStoredProcedureIdentifier(id.DatabaseIdentifier?.Value, id.SchemaIdentifier?.Value, id.BaseIdentifier.Value);
                 executedProcs.Add(procedure);
             }
 

@@ -7,27 +7,24 @@ namespace SQLSpelunker.Core.Tests
     public class StoredProcedureTests
     {
         [TestMethod]
-        public void ThreePartNameToStringIsCorrect()
+        public void StoredProcsOfDifferentCaseAreEqual()
         {
-            var proc = new StoredProcedure("DB1", "dbo", "ProcOne");
-            
-            Assert.AreEqual("DB1.dbo.ProcOne", proc.ToString());
+            var procOne = new StoredProcedure("DB1", "dbo", "PROCONE");
+            var procTwo = new StoredProcedure("db1", "dbo", "procone");
+
+            Assert.AreEqual(procOne, procTwo);
         }
 
         [TestMethod]
-        public void MissingSchemaNameIsCorrect()
+        public void HashtableLookupsOfDifferentCaseMatch()
         {
-            var proc = new StoredProcedure(null, null, "ProcOne");
+            var procOne = new StoredProcedure("DB1", "dbo", "PROCONE");
+            var dic = new Dictionary<StoredProcedure, string>();
+            dic.Add(procOne, "this is a test");
 
-            Assert.AreEqual("DEF_SCH.ProcOne", proc.ToString());
-        }
+            var procTwo = new StoredProcedure("db1", "dbo", "procone");
 
-        [TestMethod]
-        public void MissingSchemaNameWithDBIsCorrect()
-        {
-            var proc = new StoredProcedure("DB1", null, "ProcOne");
-
-            Assert.AreEqual("DB1.DEF_SCH.ProcOne", proc.ToString());
+            Assert.IsTrue(dic.ContainsKey(procTwo));
         }
     }
 }
