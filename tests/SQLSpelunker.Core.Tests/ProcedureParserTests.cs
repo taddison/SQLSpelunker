@@ -11,7 +11,7 @@ namespace SQLSpelunker.Core.Tests
         {
             var batchToParse = "";
             
-            var procedures = ProcedureParser.GetProcedures(batchToParse);
+            var procedures = ProcedureParser.GetExecutedProcedures(batchToParse);
 
             Assert.AreEqual(0, procedures.Count);
         }
@@ -21,7 +21,7 @@ namespace SQLSpelunker.Core.Tests
         {
             var batchToParse = "exec dbo.ProcOne;";
 
-            var procedures = ProcedureParser.GetProcedures(batchToParse);
+            var procedures = ProcedureParser.GetExecutedProcedures(batchToParse);
 
             Assert.AreEqual(1, procedures.Count);
         }
@@ -31,7 +31,7 @@ namespace SQLSpelunker.Core.Tests
         {
             var batchToParse = "exec ProcOne;";
 
-            var procedures = ProcedureParser.GetProcedures(batchToParse);
+            var procedures = ProcedureParser.GetExecutedProcedures(batchToParse);
 
             Assert.AreEqual(1, procedures.Count);
         }
@@ -41,7 +41,37 @@ namespace SQLSpelunker.Core.Tests
         {
             var batchToParse = "dbo.ProcOne;";
 
-            var procedures = ProcedureParser.GetProcedures(batchToParse);
+            var procedures = ProcedureParser.GetExecutedProcedures(batchToParse);
+
+            Assert.AreEqual(1, procedures.Count);
+        }
+
+        [TestMethod]
+        public void InvalidSQLReturnsNoProcedures()
+        {
+            var batchToParse = "this is not a valid pieceof SQL";
+
+            var procedures = ProcedureParser.GetExecutedProcedures(batchToParse);
+
+            Assert.AreEqual(0, procedures.Count);
+        }
+
+        [TestMethod]
+        public void MultipleExecReturnsCorrectCount()
+        {
+            var batchToParse = "exec dbo.ProcOne exec dbo.ProcTwo";
+
+            var procedures = ProcedureParser.GetExecutedProcedures(batchToParse);
+
+            Assert.AreEqual(2, procedures.Count);
+        }
+
+        [TestMethod]
+        public void DefaultSchemaNameParsedCorrectly()
+        {
+            var batchToParse = "exec DB1..ProcOne";
+
+            var procedures = ProcedureParser.GetExecutedProcedures(batchToParse);
 
             Assert.AreEqual(1, procedures.Count);
         }

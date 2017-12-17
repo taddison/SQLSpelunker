@@ -6,9 +6,9 @@ using System.Linq;
 
 namespace SQLSpelunker.Core
 {
-    public class ProcedureParser
+    public static class ProcedureParser
     {
-        public static IList<StoredProcedure> GetProcedures(string tsqlBatch)
+        public static IList<StoredProcedure> GetExecutedProcedures(string tsqlBatch)
         {
             var parser = new TSql140Parser(false);
             var sr = new StringReader(tsqlBatch);

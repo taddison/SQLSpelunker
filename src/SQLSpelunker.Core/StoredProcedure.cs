@@ -4,6 +4,8 @@ namespace SQLSpelunker.Core
 {
     public class StoredProcedure
     {
+        private static string DEFAULT_SCHEMA = "DEF_SCH";
+
         public StoredProcedure(string database, string schema, string name)
         {
             if(string.IsNullOrWhiteSpace(name))
@@ -22,7 +24,14 @@ namespace SQLSpelunker.Core
 
         public override string ToString()
         {
-            return $"{Database}.{Schema}.{Name}";
+            if(string.IsNullOrWhiteSpace(Database))
+            {
+                return $"{Schema ?? DEFAULT_SCHEMA}.{Name}";
+            }
+            else
+            {
+                return $"{Database}.{Schema ?? DEFAULT_SCHEMA}.{Name}";
+            }
         }
     }
 }
