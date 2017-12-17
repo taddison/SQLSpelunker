@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Text;
 
 namespace SQLSpelunker.Core
@@ -15,6 +16,7 @@ namespace SQLSpelunker.Core
             {
                 throw new ArgumentOutOfRangeException(nameof(connectionString));
             }
+
             _connectionString = connectionString;
             _definitions = new Dictionary<StoredProcedure, string>();
         }
@@ -31,7 +33,17 @@ namespace SQLSpelunker.Core
                 return definition;
             }
 
-            return ""; // TODO: Get the definition from the database & store it
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (var cmd = new SqlCommand($"select object_definition(object_id('{storedProcedure.Database}.{storedProcedure.Schema}.{storedProcedure.Name}'))", conn))
+                {
+                    definition = Convert.ToString(cmd.ExecuteScalar());
+                }
+            }
+
+            _definitions.Add(storedProcedure, definition);
+            return definition;
         }
     }
 }

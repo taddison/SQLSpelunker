@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{596A2D97
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SQLSpelunker.Core.Tests", "tests\SQLSpelunker.Core.Tests\SQLSpelunker.Core.Tests.csproj", "{86267366-6503-4A4B-BD29-452ABBFB3484}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SQLSpelunker.Console", "src\SQLSpelunker.Console\SQLSpelunker.Console.csproj", "{9028B90D-9763-4E2C-9E72-D47985010398}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,18 @@ Global
 		{86267366-6503-4A4B-BD29-452ABBFB3484}.Release|x64.Build.0 = Release|Any CPU
 		{86267366-6503-4A4B-BD29-452ABBFB3484}.Release|x86.ActiveCfg = Release|Any CPU
 		{86267366-6503-4A4B-BD29-452ABBFB3484}.Release|x86.Build.0 = Release|Any CPU
+		{9028B90D-9763-4E2C-9E72-D47985010398}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9028B90D-9763-4E2C-9E72-D47985010398}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9028B90D-9763-4E2C-9E72-D47985010398}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9028B90D-9763-4E2C-9E72-D47985010398}.Debug|x64.Build.0 = Debug|Any CPU
+		{9028B90D-9763-4E2C-9E72-D47985010398}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9028B90D-9763-4E2C-9E72-D47985010398}.Debug|x86.Build.0 = Debug|Any CPU
+		{9028B90D-9763-4E2C-9E72-D47985010398}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9028B90D-9763-4E2C-9E72-D47985010398}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9028B90D-9763-4E2C-9E72-D47985010398}.Release|x64.ActiveCfg = Release|Any CPU
+		{9028B90D-9763-4E2C-9E72-D47985010398}.Release|x64.Build.0 = Release|Any CPU
+		{9028B90D-9763-4E2C-9E72-D47985010398}.Release|x86.ActiveCfg = Release|Any CPU
+		{9028B90D-9763-4E2C-9E72-D47985010398}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,6 +65,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{93F0406F-3684-4B2D-BE0E-23705772CA43} = {B195C15B-7D74-4C1F-923A-14147856812E}
 		{86267366-6503-4A4B-BD29-452ABBFB3484} = {596A2D97-AFAF-484A-A4B4-53ED21EAA1B0}
+		{9028B90D-9763-4E2C-9E72-D47985010398} = {B195C15B-7D74-4C1F-923A-14147856812E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {317EFB43-460C-4C30-921E-4EEBD6B604D0}
