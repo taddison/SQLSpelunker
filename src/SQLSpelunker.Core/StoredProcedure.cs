@@ -26,8 +26,8 @@ namespace SQLSpelunker.Core
             Name = name;
         }
 
-        public StoredProcedure(ParsedStoredProcedureIdentifier procedure)
-            : this(procedure.Database, procedure.Schema, procedure.Name) { }
+        public StoredProcedure(ParsedStoredProcedureIdentifier procedure, string defaultSchema, string defaultDatabase)
+            : this(procedure.Database ?? defaultDatabase, procedure.Schema ?? defaultSchema, procedure.Name) { }
 
         public string Database { get; private set; }
         public string Schema { get; private set; }
