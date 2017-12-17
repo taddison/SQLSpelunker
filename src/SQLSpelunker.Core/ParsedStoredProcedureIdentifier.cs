@@ -16,9 +16,9 @@ namespace SQLSpelunker.Core
             Name = name;
         }
 
-        public string Database { get; set; }
-        public string Schema { get; set; }
-        public string Name { get; set; }
+        public string Database { get; private set; }
+        public string Schema { get; private set; }
+        public string Name { get; private set; }
 
         public bool IsDefaultSchema => String.IsNullOrWhiteSpace(Schema);
         public bool IsCurrentDatabase => String.IsNullOrWhiteSpace(Database);

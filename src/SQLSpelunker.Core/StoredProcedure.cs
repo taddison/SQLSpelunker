@@ -29,9 +29,9 @@ namespace SQLSpelunker.Core
         public StoredProcedure(ParsedStoredProcedureIdentifier procedure)
             : this(procedure.Database, procedure.Schema, procedure.Name) { }
 
-        public string Database { get; set; }
-        public string Schema { get; set; }
-        public string Name { get; set; }
+        public string Database { get; private set; }
+        public string Schema { get; private set; }
+        public string Name { get; private set; }
 
         public override int GetHashCode()
         {

@@ -14,16 +14,12 @@ namespace SQLSpelunker.Core
             var sr = new StringReader(tsqlBatch);
             var fragment = parser.Parse(sr, out IList<ParseError> fragmentErrors);
 
-            var procs = from batch in (fragment as TSqlScript).Batches
-                                     from statement in batch.Statements
-                                     let execStatement = statement as TSqlFragment as ExecuteStatement
-                                     where execStatement != null
-                                     let execProc = execStatement.ExecuteSpecification.ExecutableEntity as ExecutableProcedureReference
-                                     select execProc;
+            var visitor = new StoredProcedureVisitor();
+            fragment.Accept(visitor);
 
             var executedProcs = new List<ParsedStoredProcedureIdentifier>();
 
-            foreach(var proc in procs)
+            foreach(var proc in visitor.Procedures)
             {
                 var id = proc.ProcedureReference.ProcedureReference.Name;
                 var procedure = new ParsedStoredProcedureIdentifier(id.DatabaseIdentifier?.Value, id.SchemaIdentifier?.Value, id.BaseIdentifier.Value);

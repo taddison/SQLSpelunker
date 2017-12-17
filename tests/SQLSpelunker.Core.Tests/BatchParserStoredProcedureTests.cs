@@ -75,5 +75,21 @@ namespace SQLSpelunker.Core.Tests
 
             Assert.AreEqual(1, procedures.Count);
         }
+
+        [TestMethod]
+        public void BeginEndBlockCorrectlyHandled()
+        {
+            var batchToParse = 
+@"
+begin
+    exec dbo.ProcOne;
+end
+exec dbo.ProcTwo;
+";
+
+            var procedures = BatchParser.GetExecutedProcedures(batchToParse);
+
+            Assert.AreEqual(2, procedures.Count);
+        }
     }
 }
