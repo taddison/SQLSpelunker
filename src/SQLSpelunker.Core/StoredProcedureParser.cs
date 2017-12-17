@@ -19,13 +19,30 @@ namespace SQLSpelunker.Core
             var sr = new StringReader(procedureDefinition);
             var fragment = parser.Parse(sr, out IList<ParseError> fragmentErrors);
 
-            var createProc = (fragment as TSqlScript)?.Batches[0]?.Statements[0] as CreateProcedureStatement;
-            if(createProc == null)
+            var visitor = new StoredProcedureVisitor();
+            fragment.Accept(visitor);
+
+            if(visitor.CreatedProcedures.Count != 1)
             {
-                throw new Exception("string must contain a procedure definition");
+                throw new Exception("string must contain exactly one create procedure statement");
             }
 
-            return "";
+            var create = visitor.CreatedProcedures[0];
+            if(create.StatementList.Statements.Count == 0)
+            {
+                return "";
+            }
+
+            var firstToken = create.StatementList.Statements[0].FirstTokenIndex;
+            var lastToken = create.StatementList.Statements[0].LastTokenIndex;
+
+            var sb = new StringBuilder();
+            for(var i = firstToken; i <= lastToken; i++)
+            {
+                sb.Append(create.ScriptTokenStream[i].Text);
+            }
+
+            return sb.ToString();
         }
     }
 }

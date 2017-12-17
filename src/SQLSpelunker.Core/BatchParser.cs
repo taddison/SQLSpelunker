@@ -19,7 +19,7 @@ namespace SQLSpelunker.Core
 
             var executedProcs = new List<ParsedStoredProcedureIdentifier>();
 
-            foreach(var proc in visitor.Procedures)
+            foreach(var proc in visitor.ExecutedProcedures)
             {
                 var id = proc.ProcedureReference.ProcedureReference.Name;
                 var procedure = new ParsedStoredProcedureIdentifier(id.DatabaseIdentifier?.Value, id.SchemaIdentifier?.Value, id.BaseIdentifier.Value);

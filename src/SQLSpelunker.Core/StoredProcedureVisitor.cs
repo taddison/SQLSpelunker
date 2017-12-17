@@ -9,14 +9,22 @@ namespace SQLSpelunker.Core
     {
         public StoredProcedureVisitor()
         {
-            Procedures = new List<ExecutableProcedureReference>();
+            ExecutedProcedures = new List<ExecutableProcedureReference>();
+            CreatedProcedures = new List<CreateProcedureStatement>();
         }
 
-        public IList<ExecutableProcedureReference> Procedures { get; private set; }
+        public IList<ExecutableProcedureReference> ExecutedProcedures { get; private set; }
+        public IList<CreateProcedureStatement> CreatedProcedures { get; private set; }
 
         public override void Visit(ExecutableProcedureReference node)
         {
-            Procedures.Add(node);
+            ExecutedProcedures.Add(node);
+            base.Visit(node);
+        }
+
+        public override void Visit(CreateProcedureStatement node)
+        {
+            CreatedProcedures.Add(node);
             base.Visit(node);
         }
     }
