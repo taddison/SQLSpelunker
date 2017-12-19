@@ -20,8 +20,8 @@ namespace SQLSpelunker.Core.Tests
         public void CalledWithProcsAndNoLookupsGeneratesFirstLevelOfChildren()
         {
             var fds = new FakeDefinitionService();
-            fds.AddDefinition(new StoredProcedure("master", "dbo", "ProcOne"), "");
-            fds.AddDefinition(new StoredProcedure("master", "dbo", "ProcTwo"), "");
+            fds.AddDefinition(new StoredProcedure("master", "dbo", "ProcOne"), "create procedure dbo.ProcOne as");
+            fds.AddDefinition(new StoredProcedure("master", "dbo", "ProcTwo"), "create procedure dbo.ProcTwo as");
             var sw = new ScriptWalker(fds);
             var procs = sw.GetCalledProcedures("exec dbo.ProcOne; exec dbo.ProcTwo;", "master");
 
@@ -32,8 +32,8 @@ namespace SQLSpelunker.Core.Tests
         public void InfiniteLoopIdentifiedAtLevelOne()
         {
             var fds = new FakeDefinitionService();
-            fds.AddDefinition(new StoredProcedure("master", "dbo", "ProcOne"), "");
-            fds.AddDefinition(new StoredProcedure("master", "dbo", "ProcTwo"), "exec dbo.ProcTwo;");
+            fds.AddDefinition(new StoredProcedure("master", "dbo", "ProcOne"), "create procedure dbo.ProcOne as");
+            fds.AddDefinition(new StoredProcedure("master", "dbo", "ProcTwo"), "create procedure dbo.ProcTwo as exec dbo.ProcTwo;");
             var sw = new ScriptWalker(fds);
             var procs = sw.GetCalledProcedures("exec dbo.ProcOne; exec dbo.ProcTwo;", "master");
             Debug.WriteLine(procs.GetCallHierarchy());
@@ -45,10 +45,10 @@ namespace SQLSpelunker.Core.Tests
         public void MultipleLevelOutput()
         {
             var fds = new FakeDefinitionService();
-            fds.AddDefinition(new StoredProcedure("master", "dbo", "ProcOne"), "");
-            fds.AddDefinition(new StoredProcedure("master", "dbo", "ProcTwo"), "exec dbo.ProcThree;");
-            fds.AddDefinition(new StoredProcedure("master", "dbo", "ProcThree"), "exec dbo.ProcFour;");
-            fds.AddDefinition(new StoredProcedure("master", "dbo", "ProcFour"), "return;");
+            fds.AddDefinition(new StoredProcedure("master", "dbo", "ProcOne"), "create procedure dbo.ProcOne as");
+            fds.AddDefinition(new StoredProcedure("master", "dbo", "ProcTwo"), "create procedure dbo.ProcTwo as exec dbo.ProcThree;");
+            fds.AddDefinition(new StoredProcedure("master", "dbo", "ProcThree"), "create procedure dbo.ProcThree as exec dbo.ProcFour;");
+            fds.AddDefinition(new StoredProcedure("master", "dbo", "ProcFour"), "create procedure dbo.ProcFour as return;");
             var sw = new ScriptWalker(fds);
             var procs = sw.GetCalledProcedures("exec dbo.ProcOne; exec dbo.ProcTwo; exec ProcOne; exec ProcTwo;", "master");
             Debug.WriteLine(procs.GetCallHierarchy());
