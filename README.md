@@ -1,5 +1,7 @@
 # SQLSpelunker
-Spelunk your MSSQL code
+Spelunk your MSSQL code.
+
+Supports visualising the call tree of one/more stored procedures.
 
 # Usage
 Command line usage requires three arguments:
