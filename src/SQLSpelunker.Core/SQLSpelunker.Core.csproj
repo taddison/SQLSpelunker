@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <NoWarn>NU1701</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -9,4 +10,5 @@
     <PackageReference Include="System.Data.SqlClient" Version="4.4.2" />
   </ItemGroup>
 
+  
 </Project>

@@ -19,6 +19,12 @@ namespace SQLSpelunker.Core
 
             _connectionString = connectionString;
             _definitions = new Dictionary<StoredProcedure, string>();
+
+            // Test connection during construction
+            using(var conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+            }
         }
 
         public string GetStoredProcedureDefinition(StoredProcedure storedProcedure)
