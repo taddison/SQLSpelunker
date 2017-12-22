@@ -63,7 +63,6 @@ namespace SQLSpelunker.Core
                     continue;
                 }
 
-                //var definition = StoredProcedureParser.ExtractBodyOfProcedure(_definitionService.GetStoredProcedureDefinition(proc));
                 var definition = _definitionService.GetStoredProcedureDefinition(proc);
                 var childCall = new ProcedureCall(newParentList, proc, call.Depth + 1);
                 call.Children.Add(childCall);
