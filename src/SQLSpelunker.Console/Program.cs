@@ -59,6 +59,7 @@ namespace SQLSpelunker.Console
         private static void WriteError(string error)
         {
             var originalColour = System.Console.ForegroundColor;
+            System.Console.ForegroundColor = System.ConsoleColor.Red;
             System.Console.Error.WriteLine(error);
             System.Console.ForegroundColor = originalColour;
         }
