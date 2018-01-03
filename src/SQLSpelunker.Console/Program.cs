@@ -1,4 +1,5 @@
-﻿using SQLSpelunker.Core;
+﻿using CommandLine;
+using SQLSpelunker.Core;
 using System;
 using System.Data.SqlClient;
 
@@ -8,25 +9,19 @@ namespace SQLSpelunker.Console
     {
         static void Main(string[] args)
         {
-            var connectionString = string.Empty;
-            var sqlScript = string.Empty;
-
-            if(args.Length == 2)
+            var result = Parser.Default.ParseArguments<Options>(args);
+            
+            if(result.Tag == ParserResultType.NotParsed)
             {
-                connectionString = args[0];
-                sqlScript = args[1];
-            }
-            else
-            {
-                WriteError("Invalid arguments");
-                WriteError("dotnet run <connection string> <sql script>");
                 return;
             }
 
+            var options = (result as Parsed<Options>).Value;
+            
             SqlConnectionStringBuilder builder = null;
             try
             {
-                builder = new SqlConnectionStringBuilder(connectionString);
+                builder = new SqlConnectionStringBuilder(options.Server);
             }
             catch (ArgumentException ae)
             {
@@ -45,14 +40,14 @@ namespace SQLSpelunker.Console
             ScriptWalker sw = null;
             try
             {
-                sw = new ScriptWalker(new SQLDatabaseDefinitionService(connectionString));
+                sw = new ScriptWalker(new SQLDatabaseDefinitionService(options.Server));
             }
             catch (SqlException sx)
             {
                 WriteError($"Unable to connect to database: {sx.Message}");
                 return;
             }
-            var callChain = sw.GetCalledProcedures(sqlScript, database);
+            var callChain = sw.GetCalledProcedures(options.Script, database);
             System.Console.WriteLine(callChain.GetCallHierarchy());
         }
 

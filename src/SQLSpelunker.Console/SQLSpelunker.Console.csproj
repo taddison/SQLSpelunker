@@ -9,4 +9,8 @@
     <ProjectReference Include="..\SQLSpelunker.Core\SQLSpelunker.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.1.1-beta" />
+  </ItemGroup>
+
 </Project>
