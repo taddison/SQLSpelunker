@@ -9,5 +9,5 @@ Command line usage requires two arguments:
 - **s**cript - SQL script to parse
 
 ```powershell
-c:\source\SQLSpelunker\src\SQLSpelunker.Console>dotnet run -c "server=localhost;initial catalog=foo;integrated security=sspi" -s "exec dbo.SomeProc"
+c:\source\SQLSpelunker\src\SQLSpelunker.Console>dotnet run --c "server=localhost;initial catalog=foo;integrated security=sspi" --s "exec dbo.SomeProc"
 ```
